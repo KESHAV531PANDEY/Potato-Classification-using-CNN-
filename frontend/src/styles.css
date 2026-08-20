@@ -1,0 +1,620 @@
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #17211b;
+  background: #f6f7f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --ink: #17211b;
+  --muted: #657067;
+  --line: #dce2d8;
+  --panel: #ffffff;
+  --field: #f1f4ef;
+  --green: #2f8a5b;
+  --teal: #287d78;
+  --amber: #d88a1f;
+  --red: #c2412d;
+  --blue: #3b6f8f;
+  --shadow: 0 24px 60px rgba(24, 40, 31, 0.13);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    linear-gradient(135deg, rgba(47, 138, 91, 0.13), transparent 34%),
+    linear-gradient(315deg, rgba(59, 111, 143, 0.12), transparent 30%),
+    #f6f7f2;
+}
+
+.topbar,
+.config-band {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.topbar {
+  padding: 6px 0 22px;
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.brand-lockup > div,
+.workspace > *,
+.config-band > *,
+.class-card {
+  min-width: 0;
+}
+
+.brand-mark,
+.icon-button,
+.api-pill,
+.recommendation > svg,
+.stat-card > svg,
+.endpoint-control > svg,
+.class-card svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(135deg, #2f8a5b, #287d78);
+  box-shadow: 0 14px 34px rgba(47, 138, 91, 0.26);
+}
+
+.eyebrow,
+.meta-label,
+.status-label {
+  margin: 0;
+  color: #667169;
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  color: var(--ink);
+  font-size: clamp(1.55rem, 3vw, 2.45rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+h3 {
+  margin-bottom: 0;
+  letter-spacing: 0;
+}
+
+.api-pill {
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 10px 28px rgba(24, 40, 31, 0.08);
+  font-weight: 800;
+}
+
+.api-pill.online {
+  color: #236848;
+  border-color: rgba(47, 138, 91, 0.28);
+}
+
+.api-pill.offline {
+  color: #a43628;
+  border-color: rgba(194, 65, 45, 0.28);
+}
+
+.workspace {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(340px, 1.25fr);
+  gap: 18px;
+}
+
+.upload-panel,
+.results-panel,
+.config-band {
+  border: 1px solid rgba(220, 226, 216, 0.92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: var(--shadow);
+}
+
+.upload-panel,
+.results-panel {
+  padding: 18px;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #ffffff;
+}
+
+.icon-button:hover {
+  border-color: #a9b8ad;
+  background: #f8faf7;
+}
+
+.dropzone {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 360px;
+  border: 1.5px dashed #b9c7bc;
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(47, 138, 91, 0.09), rgba(216, 138, 31, 0.08)),
+    var(--field);
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.dropzone.dragging {
+  transform: translateY(-2px);
+  border-color: var(--green);
+  background: rgba(47, 138, 91, 0.1);
+}
+
+.dropzone input,
+.button input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.dropzone-empty {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: #527160;
+  text-align: center;
+}
+
+.dropzone-empty span {
+  color: var(--ink);
+  font-weight: 850;
+}
+
+.dropzone-empty small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.leaf-preview {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+}
+
+.file-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 64px;
+  margin: 14px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.file-meta div {
+  min-width: 0;
+}
+
+.file-meta strong {
+  display: block;
+  max-width: 260px;
+  overflow: hidden;
+  color: var(--ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-meta > span {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 10px;
+}
+
+.button {
+  position: relative;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 850;
+}
+
+.button.primary {
+  color: white;
+  background: #244f41;
+  box-shadow: 0 12px 24px rgba(36, 79, 65, 0.22);
+}
+
+.button.primary:hover:not(:disabled) {
+  background: #1c4135;
+}
+
+.button.primary:disabled {
+  opacity: 0.55;
+}
+
+.button.secondary {
+  color: var(--ink);
+  border-color: var(--line);
+  background: white;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 750;
+}
+
+.message.error {
+  color: #8b2d24;
+  border: 1px solid rgba(194, 65, 45, 0.22);
+  background: #fff3ef;
+}
+
+.results-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.results-panel .panel-heading > svg {
+  color: #287d78;
+}
+
+.diagnosis-card {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.diagnosis-card.good {
+  border-color: rgba(47, 138, 91, 0.28);
+  background: #f1faf4;
+}
+
+.diagnosis-card.warning {
+  border-color: rgba(216, 138, 31, 0.3);
+  background: #fff8ec;
+}
+
+.diagnosis-card.danger {
+  border-color: rgba(194, 65, 45, 0.26);
+  background: #fff4f1;
+}
+
+.diagnosis-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.diagnosis-main h3 {
+  margin-top: 5px;
+  font-size: clamp(1.75rem, 5vw, 3.25rem);
+  line-height: 1;
+}
+
+.confidence-meter {
+  width: 108px;
+  height: 108px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #ffffff 56%, transparent 57%),
+    conic-gradient(var(--accent) var(--confidence), rgba(23, 33, 27, 0.12) 0);
+}
+
+.confidence-meter span {
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.bar-track {
+  height: 10px;
+  margin: 18px 0 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(23, 33, 27, 0.1);
+}
+
+.bar-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 260ms ease;
+}
+
+.diagnosis-card p,
+.recommendation p,
+.class-card p {
+  margin-bottom: 0;
+  color: #4d5b52;
+  line-height: 1.55;
+}
+
+.recommendation {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.recommendation > svg {
+  margin-top: 2px;
+  color: var(--teal);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.stat-card {
+  min-height: 108px;
+  display: grid;
+  align-content: space-between;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.stat-card svg {
+  color: var(--blue);
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.stat-card strong {
+  font-size: 1.35rem;
+}
+
+.config-band {
+  margin-top: 18px;
+  padding: 16px 18px;
+}
+
+.endpoint-control {
+  width: min(620px, 100%);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.endpoint-control svg {
+  color: var(--teal);
+}
+
+.endpoint-control input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-weight: 750;
+}
+
+.class-band {
+  width: min(1180px, 100%);
+  margin: 18px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.class-card {
+  min-height: 150px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.class-card > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+
+.class-card.good svg {
+  color: var(--green);
+}
+
+.class-card.warning svg {
+  color: var(--amber);
+}
+
+.class-card.danger svg {
+  color: var(--red);
+}
+
+.spin {
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 880px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .topbar,
+  .config-band {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .api-pill {
+    width: fit-content;
+  }
+
+  .workspace,
+  .class-band {
+    grid-template-columns: 1fr;
+  }
+
+  .dropzone,
+  .leaf-preview {
+    min-height: 300px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .upload-panel,
+  .results-panel,
+  .config-band {
+    padding: 14px;
+  }
+
+  .diagnosis-main {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .confidence-meter {
+    width: 92px;
+    height: 92px;
+  }
+
+  .action-row {
+    grid-template-columns: 1fr;
+  }
+}

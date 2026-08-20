@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.pyc
+*.log
+.edge-profile-codex*/
+frontend/node_modules/
+frontend/dist/
+frontend/*.png
+
+# Local data, model exports, and OS files
+PlantVillage/
+*.keras
+*.h5
+*.weights.h5
+desktop.ini
+.env
+.env.*
+!.env.example
+
+# Local tooling and generated reports
+.pytest_cache/
+.coverage
+htmlcov/
