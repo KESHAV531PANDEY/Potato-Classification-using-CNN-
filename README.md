@@ -1,87 +1,72 @@
 # 🥔 Potato Disease Classification (CNN)
 
-A deep learning system that classifies potato leaf images as **Healthy**, **Early Blight**, or **Late Blight**, deployed as a real-time prediction API — built to help catch crop disease early using computer vision instead of manual inspection.
+A deep learning system that classifies potato leaf images as **Early Blight**, **Late Blight**, or **Healthy**, served through a FastAPI backend with a React frontend — built to help catch crop disease early using computer vision instead of manual inspection.
 
 ## Overview
 
-Potato crops are highly vulnerable to blight, and early detection can be the difference between a treatable outbreak and a lost harvest. This project trains a Convolutional Neural Network (CNN) on the PlantVillage dataset to classify leaf images into three categories, then serves the model through a FastAPI backend for real-time image upload and prediction, deployed on AWS.
+Potato crops are highly vulnerable to blight, and early detection can be the difference between a treatable outbreak and a lost harvest. This project trains a Convolutional Neural Network (CNN) on the PlantVillage dataset to classify leaf images into three categories, serves predictions through a FastAPI backend, and provides a React-based interface for uploading images.
 
 ## Key Results
 
 - **96% test accuracy** across all three classes
-- Classes: `Healthy` · `Early Blight` · `Late Blight`
-- Data augmentation and regularization applied to reduce overfitting and improve generalization to unseen images
+- Classes (as returned by the API): `Potato___Early_blight` · `Potato___Late_blight` · `Potato___healthy`
 
 ## Tech Stack
 
 | Layer | Tools |
 |---|---|
-| Model | TensorFlow / Keras, CNN |
-| Language | Python |
-| Serving | FastAPI |
-| Deployment | AWS |
-| *(add)* | e.g. NumPy, Pillow, Uvicorn, or any other libs you used |
-
-## Dataset
-
-[PlantVillage Dataset](https://www.kaggle.com/datasets/arjuntejaswi/plant-village) — potato leaf images across the three target classes.
-
-*(Fill in: number of images used, train/validation/test split ratio, and any preprocessing/cleaning you did before training.)*
-
-## Model & Training
-
-- Convolutional Neural Network trained from scratch using TensorFlow/Keras
-- **Data augmentation** applied (e.g. rotation, horizontal flip, zoom — update with what you actually used) to expand effective training data and reduce overfitting
-- **Regularization** applied (e.g. dropout, L2 weight decay — update with what you used) to improve generalization
-- Achieved 96% accuracy on the held-out test set
-
-*(Optional but strong to add: input image size, number of conv/pooling layers, optimizer + loss function, number of training epochs, and a training/validation accuracy-loss curve screenshot.)*
+| Model | TensorFlow 2.19 / Keras CNN (with a built-in `Rescaling(1./255)` layer) |
+| Backend | FastAPI + Uvicorn |
+| Frontend | React 19 + Vite, lucide-react |
+| Supporting libs | NumPy, Pillow, Matplotlib |
 
 ## How It Works
 
-1. User uploads a potato leaf image through the API
-2. Image is preprocessed (resized/normalized) to match the model's expected input
-3. The trained CNN predicts the class with a confidence score
-4. Result is returned in real time as a JSON response
+1. User uploads a leaf image through the React frontend
+2. The FastAPI `/predict` endpoint reads the image, converts it to RGB, and resizes it to 256×256 (the model handles pixel rescaling internally, so no manual normalization is applied in the API layer)
+3. The loaded Keras model (`potato_model.keras`) predicts class probabilities
+4. The predicted class and confidence score are returned as JSON
 
 ## API
 
+**`GET /`** — health check
+```json
+{ "message": "Potato Disease Classification API Running" }
 ```
-POST /predict
-Content-Type: multipart/form-data
 
-Body: image file
-
-Response:
+**`POST /predict`** — multipart form upload, field name `file`
+```json
 {
-  "class": "Late Blight",
-  "confidence": 0.96
+  "success": true,
+  "prediction": {
+    "class": "Potato___Early_blight",
+    "confidence": 96.42
+  }
 }
 ```
-*(Update this block to match your actual endpoint path and real response schema.)*
 
-## Installation & Setup
+## Running Locally
 
+Backend:
 ```bash
-git clone <your-repo-url>
-cd potato-disease-classification
-pip install -r requirements.txt
-uvicorn main:app --reload
+cd Api
+pip install -r ../requirements.txt
+python main.py
+# runs at http://127.0.0.1:8001
 ```
-*(Update commands/filenames to match your actual project structure.)*
 
-## Usage Example
-
+Frontend:
 ```bash
-curl -X POST "http://localhost:8000/predict" \
-  -F "file=@sample_leaf.jpg"
+cd frontend
+npm install
+npm run dev
 ```
-*(Add a screenshot or GIF of the UI/response here if you have one — this is the single biggest thing that makes a README stand out.)*
 
-## Deployment
+## Model & Training
 
-Deployed using FastAPI on AWS for real-time image upload and prediction.
-*(Add: which AWS service — EC2 / Elastic Beanstalk / Lambda — and a live demo link if it's currently hosted.)*
+The model (`potato_model.keras`) is trained on the PlantVillage dataset across the three classes above, with a built-in `Rescaling(1./255)` layer so raw pixel values feed directly into the network.
+
+*(The training script/notebook that produced this model isn't in the repo yet — adding it, along with your architecture, augmentation, and regularization choices, is the single best thing you could add here. It's the part that actually demonstrates the ML work behind the 96% number.)*
 
 ## Results
 
@@ -89,13 +74,11 @@ Deployed using FastAPI on AWS for real-time image upload and prediction.
 |---|---|
 | Test Accuracy | 96% |
 
-*(Optional: add a confusion matrix or per-class precision/recall if you have it — very compelling for recruiters.)*
-
 ## Future Improvements
 
-- [ ] Extend to additional crop types/diseases
-- [ ] Add a simple web frontend for direct image upload
-- [ ] Optimize model for lightweight/edge deployment
+- [ ] Add the training notebook/script to the repo
+- [ ] Reconcile CORS config with actual deployment target
+- [ ] Add a confusion matrix / per-class precision & recall
 
 ## Author
 
